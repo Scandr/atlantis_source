@@ -80,6 +80,11 @@
 #    ansible.builtin.debug:
 #      var: output
 
+  - name: Ensure group "docker" exists
+    ansible.builtin.group:
+      name: docker
+      state: present
+
   - name: Create atlantis user
     ansible.builtin.user:
       name: atlantis
@@ -92,15 +97,24 @@
       state: directory
       mode: '0755'
       owner: atlantis
-      group: atlantis
+      group: docker
 
-  - name: Copy dcoker-compose
+  - name: Copy docker-compose
     ansible.builtin.copy:
       src: docker/
-      dest: /opt/tlantis/docker/
+      dest: /opt/atlantis/docker/
       owner: atlantis
-      group: atlantis
+      group: docker
       mode: '0644'
+
+  - name: Create dir for atlantis
+    ansible.builtin.file:
+      path: /opt/atlantis
+      state: directory
+      mode: '0775'
+      owner: atlantis
+      group: docker
+      recurse: yes
 
   - name: Run docker-compose
     ansible.builtin.shell:
