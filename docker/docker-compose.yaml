@@ -1,0 +1,12 @@
+services:
+  atlantis:
+    image: ghcr.io/runatlantis/atlantis:latest
+    container_name: atlantis
+    ports:
+      - 4141:4141
+    restart: always
+    environment:
+      - ATLANTIS_GH_WEBHOOK_SECRET="37S16H0oWUAChrruTCeM"
+      - ATLANTIS_GH_USER="Scandr"
+      - ATLANTIS_GH_TOKEN="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"
+      - ATLANTIS_REPO_ALLOWLIST="github.com/Scandr/netology_devops_diploma"
