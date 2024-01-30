@@ -47,6 +47,7 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
+      - docker-compose
       - containerd.io
       - golang-go
       - nfs-common
@@ -88,36 +89,40 @@
   - name: Create atlantis user
     ansible.builtin.user:
       name: atlantis
-      group: docker
       home: /opt/atlantis
-
-  - name: Create dir for atlantis
-    ansible.builtin.file:
-      path: /opt/atlantis/docker
-      state: directory
-      mode: '0755'
-      owner: atlantis
-      group: docker
-
-  - name: Copy docker-compose
-    ansible.builtin.copy:
-      src: docker/
-      dest: /opt/atlantis/docker/
-      owner: atlantis
-      group: docker
-      mode: '0644'
+      uid: 1001
+      shell: /bin/bash
 
   - name: Create dir for atlantis
     ansible.builtin.file:
       path: /opt/atlantis
       state: directory
+      mode: '0755'
+      owner: atlantis
+
+  - name: Copy docker-compose
+    ansible.builtin.copy:
+      src: dockerfiles
+      dest: /opt/atlantis/
+      owner: atlantis
+      mode: '0644'
+
+  - name: adding existing user atlantis to group docker
+    ansible.builtin.user:
+      name: atlantis
+      groups: docker
+      append: yes
+
+  - name: Create dir for atlantis
+    ansible.builtin.file:
+      path: /opt/atlantis/.docker
+      state: directory
       mode: '0775'
       owner: atlantis
-      group: docker
       recurse: yes
 
   - name: Run docker-compose
     ansible.builtin.shell:
-      cmd: "docker-compose -f /opt/tlantis/docker/docker-compose.yml up -d"
+      cmd: "docker-compose -f /opt/atlantis/dockerfiles/docker-compose.yml up -d"
     become: yes
-    become_user: atlantis
+#    become_user: atlantis

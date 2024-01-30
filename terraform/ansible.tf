@@ -12,7 +12,7 @@ resource "null_resource" "wait" {
 
 resource "null_resource" "cluster" {
   provisioner "local-exec" {
-    command = "ANSIBLE_FORCE_COLOR=1 ansible-playbook -i ../playbooks/inventory.yml -b -v ../playbooks/install_atlantis.yml --private-key=/opt/yandex_cloud/id_rsa"
+    command = "ANSIBLE_FORCE_COLOR=1 ansible-playbook -i ../playbooks/inventory.yml -b -v ../playbooks/install_atlantis.yml --private-key=/opt/yandex_cloud/id_rsa  "
   }
 
   depends_on = [

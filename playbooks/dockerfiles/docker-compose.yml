@@ -1,0 +1,8 @@
+services:
+  atlantis:
+    image: xillah/custom_atlantis:latest
+    container_name: atlantis
+    ports:
+      - 4141:4141
+    restart: always
+    command: atlantis server --gh-user="Scandr" --gh-token='' --gh-webhook-secret="" --repo-allowlist='github.com/Scandr/netology_devops_diploma'
