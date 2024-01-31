@@ -1,6 +1,7 @@
 services:
   atlantis:
-    image: xillah/custom_atlantis:latest
+#    image: xillah/custom_atlantis:latest
+    build: .
     container_name: atlantis
     ports:
       - 4141:4141
