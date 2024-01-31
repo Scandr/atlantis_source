@@ -1,7 +1,7 @@
 resource "yandex_compute_instance" "atlantis-server" {
   name                      = "atlantis-server"
   zone                      = "ru-central1-a"
-  hostname                  = "master01.netology.yc"
+  hostname                  = "atlantis-server.netology.yc"
   allow_stopping_for_update = true
 
   resources {
@@ -11,7 +11,7 @@ resource "yandex_compute_instance" "atlantis-server" {
   boot_disk {
     initialize_params {
       image_id    = "${var.os_destrib}"
-      name        = "root-master01"
+      name        = "root-atlantis"
       type        = "network-nvme"
       size        = "40"
     }
